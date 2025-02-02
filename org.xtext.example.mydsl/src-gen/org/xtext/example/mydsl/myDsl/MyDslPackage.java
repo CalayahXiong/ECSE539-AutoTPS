@@ -115,13 +115,22 @@ public interface MyDslPackage extends EPackage
   int WORKER = 1;
 
   /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int WORKER__ID = 0;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int WORKER__NAME = 0;
+  int WORKER__NAME = 1;
 
   /**
    * The feature id for the '<em><b>Seniority</b></em>' attribute.
@@ -130,7 +139,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WORKER__SENIORITY = 1;
+  int WORKER__SENIORITY = 2;
 
   /**
    * The feature id for the '<em><b>Employee Number</b></em>' attribute.
@@ -139,7 +148,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WORKER__EMPLOYEE_NUMBER = 2;
+  int WORKER__EMPLOYEE_NUMBER = 3;
 
   /**
    * The feature id for the '<em><b>Is Active</b></em>' attribute.
@@ -148,7 +157,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WORKER__IS_ACTIVE = 3;
+  int WORKER__IS_ACTIVE = 4;
 
   /**
    * The number of structural features of the '<em>Worker</em>' class.
@@ -157,7 +166,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WORKER_FEATURE_COUNT = 4;
+  int WORKER_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.TaskImpl <em>Task</em>}' class.
@@ -597,6 +606,17 @@ public interface MyDslPackage extends EPackage
   EClass getWorker();
 
   /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.Worker#getId <em>Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see org.xtext.example.mydsl.myDsl.Worker#getId()
+   * @see #getWorker()
+   * @generated
+   */
+  EAttribute getWorker_Id();
+
+  /**
    * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.Worker#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1033,6 +1053,14 @@ public interface MyDslPackage extends EPackage
      * @generated
      */
     EClass WORKER = eINSTANCE.getWorker();
+
+    /**
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute WORKER__ID = eINSTANCE.getWorker_Id();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

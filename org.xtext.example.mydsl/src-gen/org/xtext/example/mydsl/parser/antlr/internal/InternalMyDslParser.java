@@ -370,12 +370,12 @@ public class InternalMyDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleWorker"
-    // InternalMyDsl.g:148:1: ruleWorker returns [EObject current=null] : (otherlv_0= 'worker' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'name' otherlv_4= '=' ( (lv_name_5_0= RULE_STRING ) ) otherlv_6= ';' otherlv_7= 'seniority' otherlv_8= '=' ( (lv_seniority_9_0= ruleSeniorityLevel ) ) otherlv_10= ';' otherlv_11= 'employeeNumber' otherlv_12= '=' ( (lv_employeeNumber_13_0= RULE_INT ) ) otherlv_14= ';' otherlv_15= 'active' otherlv_16= '=' ( (lv_isActive_17_0= ruleBoolean ) ) otherlv_18= ';' otherlv_19= '}' ) ;
+    // InternalMyDsl.g:148:1: ruleWorker returns [EObject current=null] : (otherlv_0= 'worker' ( (lv_id_1_0= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'name' otherlv_4= '=' ( (lv_name_5_0= RULE_STRING ) ) otherlv_6= ';' otherlv_7= 'seniority' otherlv_8= '=' ( (lv_seniority_9_0= ruleSeniorityLevel ) ) otherlv_10= ';' otherlv_11= 'employeeNumber' otherlv_12= '=' ( (lv_employeeNumber_13_0= RULE_INT ) ) otherlv_14= ';' otherlv_15= 'active' otherlv_16= '=' ( (lv_isActive_17_0= ruleBoolean ) ) otherlv_18= ';' otherlv_19= '}' ) ;
     public final EObject ruleWorker() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token lv_name_1_0=null;
+        Token lv_id_1_0=null;
         Token otherlv_2=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
@@ -401,25 +401,25 @@ public class InternalMyDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMyDsl.g:154:2: ( (otherlv_0= 'worker' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'name' otherlv_4= '=' ( (lv_name_5_0= RULE_STRING ) ) otherlv_6= ';' otherlv_7= 'seniority' otherlv_8= '=' ( (lv_seniority_9_0= ruleSeniorityLevel ) ) otherlv_10= ';' otherlv_11= 'employeeNumber' otherlv_12= '=' ( (lv_employeeNumber_13_0= RULE_INT ) ) otherlv_14= ';' otherlv_15= 'active' otherlv_16= '=' ( (lv_isActive_17_0= ruleBoolean ) ) otherlv_18= ';' otherlv_19= '}' ) )
-            // InternalMyDsl.g:155:2: (otherlv_0= 'worker' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'name' otherlv_4= '=' ( (lv_name_5_0= RULE_STRING ) ) otherlv_6= ';' otherlv_7= 'seniority' otherlv_8= '=' ( (lv_seniority_9_0= ruleSeniorityLevel ) ) otherlv_10= ';' otherlv_11= 'employeeNumber' otherlv_12= '=' ( (lv_employeeNumber_13_0= RULE_INT ) ) otherlv_14= ';' otherlv_15= 'active' otherlv_16= '=' ( (lv_isActive_17_0= ruleBoolean ) ) otherlv_18= ';' otherlv_19= '}' )
+            // InternalMyDsl.g:154:2: ( (otherlv_0= 'worker' ( (lv_id_1_0= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'name' otherlv_4= '=' ( (lv_name_5_0= RULE_STRING ) ) otherlv_6= ';' otherlv_7= 'seniority' otherlv_8= '=' ( (lv_seniority_9_0= ruleSeniorityLevel ) ) otherlv_10= ';' otherlv_11= 'employeeNumber' otherlv_12= '=' ( (lv_employeeNumber_13_0= RULE_INT ) ) otherlv_14= ';' otherlv_15= 'active' otherlv_16= '=' ( (lv_isActive_17_0= ruleBoolean ) ) otherlv_18= ';' otherlv_19= '}' ) )
+            // InternalMyDsl.g:155:2: (otherlv_0= 'worker' ( (lv_id_1_0= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'name' otherlv_4= '=' ( (lv_name_5_0= RULE_STRING ) ) otherlv_6= ';' otherlv_7= 'seniority' otherlv_8= '=' ( (lv_seniority_9_0= ruleSeniorityLevel ) ) otherlv_10= ';' otherlv_11= 'employeeNumber' otherlv_12= '=' ( (lv_employeeNumber_13_0= RULE_INT ) ) otherlv_14= ';' otherlv_15= 'active' otherlv_16= '=' ( (lv_isActive_17_0= ruleBoolean ) ) otherlv_18= ';' otherlv_19= '}' )
             {
-            // InternalMyDsl.g:155:2: (otherlv_0= 'worker' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'name' otherlv_4= '=' ( (lv_name_5_0= RULE_STRING ) ) otherlv_6= ';' otherlv_7= 'seniority' otherlv_8= '=' ( (lv_seniority_9_0= ruleSeniorityLevel ) ) otherlv_10= ';' otherlv_11= 'employeeNumber' otherlv_12= '=' ( (lv_employeeNumber_13_0= RULE_INT ) ) otherlv_14= ';' otherlv_15= 'active' otherlv_16= '=' ( (lv_isActive_17_0= ruleBoolean ) ) otherlv_18= ';' otherlv_19= '}' )
-            // InternalMyDsl.g:156:3: otherlv_0= 'worker' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'name' otherlv_4= '=' ( (lv_name_5_0= RULE_STRING ) ) otherlv_6= ';' otherlv_7= 'seniority' otherlv_8= '=' ( (lv_seniority_9_0= ruleSeniorityLevel ) ) otherlv_10= ';' otherlv_11= 'employeeNumber' otherlv_12= '=' ( (lv_employeeNumber_13_0= RULE_INT ) ) otherlv_14= ';' otherlv_15= 'active' otherlv_16= '=' ( (lv_isActive_17_0= ruleBoolean ) ) otherlv_18= ';' otherlv_19= '}'
+            // InternalMyDsl.g:155:2: (otherlv_0= 'worker' ( (lv_id_1_0= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'name' otherlv_4= '=' ( (lv_name_5_0= RULE_STRING ) ) otherlv_6= ';' otherlv_7= 'seniority' otherlv_8= '=' ( (lv_seniority_9_0= ruleSeniorityLevel ) ) otherlv_10= ';' otherlv_11= 'employeeNumber' otherlv_12= '=' ( (lv_employeeNumber_13_0= RULE_INT ) ) otherlv_14= ';' otherlv_15= 'active' otherlv_16= '=' ( (lv_isActive_17_0= ruleBoolean ) ) otherlv_18= ';' otherlv_19= '}' )
+            // InternalMyDsl.g:156:3: otherlv_0= 'worker' ( (lv_id_1_0= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'name' otherlv_4= '=' ( (lv_name_5_0= RULE_STRING ) ) otherlv_6= ';' otherlv_7= 'seniority' otherlv_8= '=' ( (lv_seniority_9_0= ruleSeniorityLevel ) ) otherlv_10= ';' otherlv_11= 'employeeNumber' otherlv_12= '=' ( (lv_employeeNumber_13_0= RULE_INT ) ) otherlv_14= ';' otherlv_15= 'active' otherlv_16= '=' ( (lv_isActive_17_0= ruleBoolean ) ) otherlv_18= ';' otherlv_19= '}'
             {
             otherlv_0=(Token)match(input,12,FOLLOW_6); 
 
             			newLeafNode(otherlv_0, grammarAccess.getWorkerAccess().getWorkerKeyword_0());
             		
-            // InternalMyDsl.g:160:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalMyDsl.g:161:4: (lv_name_1_0= RULE_ID )
+            // InternalMyDsl.g:160:3: ( (lv_id_1_0= RULE_ID ) )
+            // InternalMyDsl.g:161:4: (lv_id_1_0= RULE_ID )
             {
-            // InternalMyDsl.g:161:4: (lv_name_1_0= RULE_ID )
-            // InternalMyDsl.g:162:5: lv_name_1_0= RULE_ID
+            // InternalMyDsl.g:161:4: (lv_id_1_0= RULE_ID )
+            // InternalMyDsl.g:162:5: lv_id_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_7); 
+            lv_id_1_0=(Token)match(input,RULE_ID,FOLLOW_7); 
 
-            					newLeafNode(lv_name_1_0, grammarAccess.getWorkerAccess().getNameIDTerminalRuleCall_1_0());
+            					newLeafNode(lv_id_1_0, grammarAccess.getWorkerAccess().getIdIDTerminalRuleCall_1_0());
             				
 
             					if (current==null) {
@@ -427,8 +427,8 @@ public class InternalMyDslParser extends AbstractInternalAntlrParser {
             					}
             					setWithLastConsumed(
             						current,
-            						"name",
-            						lv_name_1_0,
+            						"id",
+            						lv_id_1_0,
             						"org.eclipse.xtext.common.Terminals.ID");
             				
 

@@ -674,9 +674,9 @@ rule__Worker__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getWorkerAccess().getNameAssignment_1()); }
-	(rule__Worker__NameAssignment_1)
-	{ after(grammarAccess.getWorkerAccess().getNameAssignment_1()); }
+	{ before(grammarAccess.getWorkerAccess().getIdAssignment_1()); }
+	(rule__Worker__IdAssignment_1)
+	{ after(grammarAccess.getWorkerAccess().getIdAssignment_1()); }
 )
 ;
 finally {
@@ -2402,15 +2402,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Worker__NameAssignment_1
+rule__Worker__IdAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getWorkerAccess().getNameIDTerminalRuleCall_1_0()); }
+		{ before(grammarAccess.getWorkerAccess().getIdIDTerminalRuleCall_1_0()); }
 		RULE_ID
-		{ after(grammarAccess.getWorkerAccess().getNameIDTerminalRuleCall_1_0()); }
+		{ after(grammarAccess.getWorkerAccess().getIdIDTerminalRuleCall_1_0()); }
 	)
 ;
 finally {

@@ -16,7 +16,7 @@ Model:
 }
  */ 
 Worker:
-	'worker' name=ID '{'
+	'worker' id=ID '{'
 		'name' '=' name=STRING ';'
 		'seniority' '=' seniority=SeniorityLevel ';'
 		'employeeNumber' '=' employeeNumber=INT ';'

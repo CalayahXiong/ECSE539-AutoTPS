@@ -159,9 +159,9 @@ ruleWorker returns [EObject current=null]
 		}
 		(
 			(
-				lv_name_1_0=RULE_ID
+				lv_id_1_0=RULE_ID
 				{
-					newLeafNode(lv_name_1_0, grammarAccess.getWorkerAccess().getNameIDTerminalRuleCall_1_0());
+					newLeafNode(lv_id_1_0, grammarAccess.getWorkerAccess().getIdIDTerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
@@ -169,8 +169,8 @@ ruleWorker returns [EObject current=null]
 					}
 					setWithLastConsumed(
 						$current,
-						"name",
-						lv_name_1_0,
+						"id",
+						lv_id_1_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)

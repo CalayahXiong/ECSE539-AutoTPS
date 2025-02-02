@@ -58,22 +58,27 @@ public class MyDslValidator extends AbstractMyDslValidator {
         }
     }
 
-    // Rule to validate start time format (HH:MM)
+ // Rule to validate start time format (HH:MM)
     @Check
     public void checkValidStartTime(Task task) {
-        String startTime = task.getStart().toString();
-        if (startTime == null || !startTime.matches("\\d{2}:\\d{2}")) {
-            error("Start time must be in HH:MM format.", 
-                  MyDslPackage.Literals.TASK__START);
-        } else {
-            // Additional validation for valid hours (0-23) and minutes (0-59)
-            String[] parts = startTime.split(":");
-            int hours = Integer.parseInt(parts[0]);
-            int minutes = Integer.parseInt(parts[1]);
-            if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-                error("Invalid time. Hours must be between 00 and 23, and minutes between 00 and 59.", 
-                      MyDslPackage.Literals.TASK__START);
+        int hours = task.getStart().getHours();
+        int minutes = task.getStart().getMinutes();
+        
+        // Validate hours (0-23) and minutes (0-59)
+        boolean invalidHours = hours < 0 || hours >= 24;
+        boolean invalidMinutes = minutes < 0 || minutes >= 60;
+        
+        if (invalidHours || invalidMinutes) {
+            StringBuilder message = new StringBuilder();
+            if (invalidHours) {
+                message.append("Invalid hour (" + hours + "). Must be 0-23. ");
             }
+            if (invalidMinutes) {
+                message.append("Invalid minute (" + minutes + "). Must be 0-59.");
+            }
+            error(message.toString().trim(), 
+                 MyDslPackage.Literals.TASK__START, 
+                 "INVALID_TIME_FORMAT");
         }
     }
 
@@ -93,14 +98,17 @@ public class MyDslValidator extends AbstractMyDslValidator {
     }
 
     // Rule to check unique employee ID
-    @Check
-    public void checkUniqueEmployeeID(Model model) {
-        Set<Integer> employeeNumbers = new HashSet<>();
-        for (Worker worker : model.getWorkers()) {
-            if (!employeeNumbers.add(worker.getEmployeeNumber())) {
-                warning("Employee number already exists: " + worker.getEmployeeNumber(), 
-                        MyDslPackage.Literals.WORKER__EMPLOYEE_NUMBER);
-            }
+    @Check 
+    public void checkUniqueEmployeeID(Worker worker) { //can't access the top model directly
+        // get curr model
+        Model model = (Model)worker.eContainer();
+        // duplicated employee number
+        long count = model.getWorkers().stream().filter(w -> w.getEmployeeNumber() == worker.getEmployeeNumber()).count();
+
+        if (count > 1) {
+            error("Employee number " + worker.getEmployeeNumber() + " has exists.",
+                  MyDslPackage.Literals.WORKER__EMPLOYEE_NUMBER,
+                  "DUPLICATE_EMPLOYEE_ID");
         }
     }
 }

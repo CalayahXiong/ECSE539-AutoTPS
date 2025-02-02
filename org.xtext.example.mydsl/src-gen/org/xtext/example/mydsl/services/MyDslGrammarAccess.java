@@ -68,8 +68,8 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.mydsl.MyDsl.Worker");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cWorkerKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Keyword cNameKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Keyword cEqualsSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
@@ -102,7 +102,7 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 		//}
 		// */
 		//Worker:
-		//    'worker' name=ID '{'
+		//    'worker' id=ID '{'
 		//        'name' '=' name=STRING ';'
 		//        'seniority' '=' seniority=SeniorityLevel ';'
 		//        'employeeNumber' '=' employeeNumber=INT ';'
@@ -110,7 +110,7 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 		//    '}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'worker' name=ID '{'
+		//'worker' id=ID '{'
 		//    'name' '=' name=STRING ';'
 		//    'seniority' '=' seniority=SeniorityLevel ';'
 		//    'employeeNumber' '=' employeeNumber=INT ';'
@@ -121,11 +121,11 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 		//'worker'
 		public Keyword getWorkerKeyword_0() { return cWorkerKeyword_0; }
 		
-		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		//id=ID
+		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		public RuleCall getIdIDTerminalRuleCall_1_0() { return cIdIDTerminalRuleCall_1_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
@@ -813,7 +813,7 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//}
 	// */
 	//Worker:
-	//    'worker' name=ID '{'
+	//    'worker' id=ID '{'
 	//        'name' '=' name=STRING ';'
 	//        'seniority' '=' seniority=SeniorityLevel ';'
 	//        'employeeNumber' '=' employeeNumber=INT ';'

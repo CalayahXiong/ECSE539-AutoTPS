@@ -22,6 +22,7 @@ import org.xtext.example.mydsl.myDsl.Worker;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.impl.WorkerImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.WorkerImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.WorkerImpl#getSeniority <em>Seniority</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.WorkerImpl#getEmployeeNumber <em>Employee Number</em>}</li>
@@ -32,6 +33,26 @@ import org.xtext.example.mydsl.myDsl.Worker;
  */
 public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
 {
+  /**
+   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getId()
+   * @generated
+   * @ordered
+   */
+  protected static final String ID_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getId()
+   * @generated
+   * @ordered
+   */
+  protected String id = ID_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -131,6 +152,31 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
   protected EClass eStaticClass()
   {
     return MyDslPackage.Literals.WORKER;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getId()
+  {
+    return id;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setId(String newId)
+  {
+    String oldId = id;
+    id = newId;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.WORKER__ID, oldId, id));
   }
 
   /**
@@ -243,6 +289,8 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
   {
     switch (featureID)
     {
+      case MyDslPackage.WORKER__ID:
+        return getId();
       case MyDslPackage.WORKER__NAME:
         return getName();
       case MyDslPackage.WORKER__SENIORITY:
@@ -265,6 +313,9 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
   {
     switch (featureID)
     {
+      case MyDslPackage.WORKER__ID:
+        setId((String)newValue);
+        return;
       case MyDslPackage.WORKER__NAME:
         setName((String)newValue);
         return;
@@ -291,6 +342,9 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
   {
     switch (featureID)
     {
+      case MyDslPackage.WORKER__ID:
+        setId(ID_EDEFAULT);
+        return;
       case MyDslPackage.WORKER__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -317,6 +371,8 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
   {
     switch (featureID)
     {
+      case MyDslPackage.WORKER__ID:
+        return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
       case MyDslPackage.WORKER__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case MyDslPackage.WORKER__SENIORITY:
@@ -340,7 +396,9 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
+    result.append(" (id: ");
+    result.append(id);
+    result.append(", name: ");
     result.append(name);
     result.append(", seniority: ");
     result.append(seniority);

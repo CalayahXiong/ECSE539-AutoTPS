@@ -271,7 +271,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * @generated
    */
   @Override
-  public EAttribute getWorker_Name()
+  public EAttribute getWorker_Id()
   {
     return (EAttribute)workerEClass.getEStructuralFeatures().get(0);
   }
@@ -282,7 +282,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * @generated
    */
   @Override
-  public EAttribute getWorker_Seniority()
+  public EAttribute getWorker_Name()
   {
     return (EAttribute)workerEClass.getEStructuralFeatures().get(1);
   }
@@ -293,7 +293,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * @generated
    */
   @Override
-  public EAttribute getWorker_EmployeeNumber()
+  public EAttribute getWorker_Seniority()
   {
     return (EAttribute)workerEClass.getEStructuralFeatures().get(2);
   }
@@ -304,9 +304,20 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * @generated
    */
   @Override
-  public EAttribute getWorker_IsActive()
+  public EAttribute getWorker_EmployeeNumber()
   {
     return (EAttribute)workerEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getWorker_IsActive()
+  {
+    return (EAttribute)workerEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -687,6 +698,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     createEReference(modelEClass, MODEL__RULES);
 
     workerEClass = createEClass(WORKER);
+    createEAttribute(workerEClass, WORKER__ID);
     createEAttribute(workerEClass, WORKER__NAME);
     createEAttribute(workerEClass, WORKER__SENIORITY);
     createEAttribute(workerEClass, WORKER__EMPLOYEE_NUMBER);
@@ -779,6 +791,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     initEReference(getModel_Rules(), this.getRule(), null, "rules", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(workerEClass, Worker.class, "Worker", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getWorker_Id(), ecorePackage.getEString(), "id", null, 0, 1, Worker.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getWorker_Name(), ecorePackage.getEString(), "name", null, 0, 1, Worker.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getWorker_Seniority(), this.getSeniorityLevel(), "seniority", null, 0, 1, Worker.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getWorker_EmployeeNumber(), ecorePackage.getEInt(), "employeeNumber", null, 0, 1, Worker.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
