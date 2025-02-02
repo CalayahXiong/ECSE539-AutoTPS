@@ -1,0 +1,43 @@
+worker W1 {
+    name = "Slice";
+    seniority = senior;
+    employeeNumber = 101;
+    active = True;
+}
+
+worker W2 {
+    name = "Bob";
+    seniority = trainee;
+    employeeNumber = 102;
+    active = True;
+}
+
+worker W3 {
+    name = "Shrill";
+    seniority = junior;
+    employeeNumber = 103;
+    active = True;
+}
+
+task T1 {
+    difficulty = easy;
+    duration = 120;
+    start = 09:00;
+}
+
+task T2 {
+    difficulty = easy;
+    duration = 120;
+    start = 10:00;
+}
+
+task T3 {
+    difficulty = hard;
+    duration = 30;
+    start = 24:00;
+}
+
+if > 180 min then senior; 
+if nightshift then junior;
+if easy then trainee;
+

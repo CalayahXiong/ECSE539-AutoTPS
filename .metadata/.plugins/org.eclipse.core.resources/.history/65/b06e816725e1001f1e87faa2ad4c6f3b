@@ -1,0 +1,43 @@
+workers = [
+        worker W1 {
+            name = "E001";
+            seniority = trainee;
+            employeeNumber = 1;
+            active = True;
+        },
+        worker W2 {
+            name = "E002";
+            seniority = junior;
+            employeeNumber = 2;
+            active = True;
+        },
+        worker W3 {
+            name = "E003";
+            seniority = senior;
+            employeeNumber = 3;
+            active = True;
+        }
+    ]
+
+    tasks = [
+        task T1 {
+            difficulty = easy;
+            duration = 120;
+            start = 9:00;
+        },
+        task T2 {
+            difficulty = easy;
+            duration = 120;
+            start = 10:00;
+        },
+        task T3 {
+            difficulty = hard;
+            duration = 30;
+            start = 0:00;
+        }
+    ]
+
+    rules = [
+        if (difficulty = easy AND shift = dayshift) then junior;
+        if ((difficulty = hard OR > 120 min) AND shift = nightshift) then senior;
+    ]

@@ -1,0 +1,84 @@
+grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
+
+Model: 
+    workers+=Worker*
+    tasks+=Task*
+    rules+=Rule*;
+ 
+/**
+ * worker W1 {
+    name = "Alice";
+    seniority = senior;
+    employeeNumber = 101;
+    active = True;
+}
+ */ 
+Worker:
+	'worker' name=ID '{'
+		'name' '=' name=STRING ';'
+		'seniority' '=' seniority=SeniorityLevel ';'
+		'employeeNumber' '=' employeeNumber=INT ';'
+		'active' '=' isActive=Boolean ';'
+	'}';
+
+/**
+ * task T1 {
+    difficulty = easy;
+    duration = 120;
+    start = 9:00;
+}
+ */
+Task:
+	'task' name=ID '{'
+		'difficulty' '=' difficulty=Difficulty ';'
+		'duration' '=' duration=INT ';'
+		'start' '=' start=TIME ';'
+	'}';
+
+/**
+ * if (> 180 min OR hard) then senior;
+ */
+Rule:
+    'if' condition=Condition 'then' assign=SeniorityLevel ';';
+
+enum SeniorityLevel:
+	trainee | junior | senior;
+
+enum Difficulty:
+	easy | moderate | hard;
+
+enum Boolean:
+	true | false;
+
+TIME:
+    hours=INT ':' minutes=INT;
+
+Condition:
+    OrCondition;
+
+OrCondition returns Condition:
+    AndCondition ({OrCondition.left=current} 'OR' right=AndCondition)*;
+
+AndCondition returns Condition:
+    PrimaryCondition ({AndCondition.left=current} 'AND' right=PrimaryCondition)*;
+
+PrimaryCondition returns Condition:
+    '(' Condition ')' |
+    Comparison |
+    ShiftCondition |
+    DifficultyCondition;
+    
+Comparison:
+    '>' duration=INT 'min' |
+    '<' duration=INT 'min' |
+    '>=' duration=INT 'min' |
+    '<=' duration=INT 'min' |
+    '=' duration=INT 'min';
+
+ShiftCondition:
+    'nightshift' | 'dayshift' | 'eveningshift';
+
+DifficultyCondition:
+    difficulty=Difficulty;

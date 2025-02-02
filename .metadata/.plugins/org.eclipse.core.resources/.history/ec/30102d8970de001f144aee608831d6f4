@@ -1,0 +1,67 @@
+import org.xtext.example.mydsl.validation.AbstractMyDslValidator;
+
+/**
+ * Firstly, the analysis tool reads tasks defined in tasks.tps
+ * Then, the inputs are tested here to validate
+ * If pass, analysis will generate the final assignment result to console 
+ */
+public class MyDslValidator extends AbstractMyDslValidator {
+	
+	// Rule to check unique Task ID
+	@Check
+	public void checkUniqueTaskID(Model model) {
+		Set<String> taskIds = new HashSet<>();
+		for (Task task : model.getTasks()) {
+			if (!taskIds.add(task.getName())) {
+				warning("Task ID has existed.", TextualDomainSpecificLanguagePackage.Literals.TASK__NAME);
+			}
+		}
+	}
+	// Rule to validate Task Difficulty
+	@Check
+	public void checkValidDifficulty(Task task) {
+		String difficulty = task.getDifficulty().toString().toLowerCase();
+		if (task.getDifficulty() == null || !difficulty.equals("easy") && !difficulty.equals("moderate") && !difficulty.equals("hard")) {
+			error("Invalid difficulty level. Valid values are: easy, moderate, hard.", TextualDomainSpecificLanguagePackage.Literals.TASK__DIFFICULTY);
+		}
+	}
+	// Rule to validate duration (15-240 min)
+	@Check
+	public void checkVlidateDuration(Task task) {
+		int duration = task.getDuration();
+		if (duration < 15 || duration > 240) {
+			error("Duration must be between 15 and 240 minutes.", TextualDomainSpecificLanguagePackage.Literals.TASK__DURATION);
+		}
+	}
+	
+	// Rule to validate start time format (HH:MM)
+    @Check
+    public void checkValidStartTime(Task task) {
+        String startTime = task.getStart();
+        if (!startTime.matches("\\d{2}:\\d{2}")) {
+            error("Start time must be in HH:MM format.", 
+                  TextualDomainSpecificLanguagePackage.Literals.TASK__START);
+        }
+    }
+	
+	//Rule to validate seniority level
+	@Check
+	public void checkValidSeniorityLevel(Worker worker) {
+		String seniority = worker.getSeniority().toString().toLowerCase();
+		if (!seniority.equals("trainee") && !seniority.equals("junior") && !seniority.equals("senior")) {
+			error("Invalid seniority level. Valid values are: trainee, junior, senior.", TextualDomainSpecificLanguagePackage.Literals.WORKER__SENIORITY);
+		}
+	}
+	// Rule to check unique employee ID
+	@Check
+	public void checkUniqueEmployeeID(Model model) {
+		Set<String> workerIds = new HashSet<>();
+		for (Worker worker : model.getWorkers()) {
+			if (!workerIds.add(worker.getId())) {
+				warning("Employee ID has existed.", TextualDomainSpecificLanguagePackage.Literals.WORKER__ID);
+			}
+		}
+	}
+	
+
+}

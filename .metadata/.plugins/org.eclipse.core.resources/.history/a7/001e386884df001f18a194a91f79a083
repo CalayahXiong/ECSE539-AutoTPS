@@ -1,0 +1,70 @@
+grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
+
+Model: 
+    workers+=Worker*
+    tasks+=Task*
+    rules+=Rule*;
+    
+Worker:
+	'worker' id=ID '{'
+		'name' '=' name=STRING ';'                           // worker name
+		'seniority' '=' seniority=SeniorityLevel ';' // Senior, junior, trainee
+		'active' '=' isActive=BOOLEAN ';'            // Active status:True/False, is false means she/he has been assigned | at rest?
+	'}';
+
+Task:
+	'task' name=ID '{'
+		'difficulty' '=' difficulty=Difficulty ';'   // Difficulty levels: easy, moderate, hard
+		'duration' '=' duration=INT ';'              // Duration in mins (15 - 240) 
+		'start' '=' start=TIME ';'                   // Start time in HH:MM format
+	'}';
+
+Rule:
+	'rule' name=ID '{'
+		'condition' '=' condition=Condition ';'      // Condition specify task attributes, like "if > 180 min" / "if nightshift"
+		'assign' '=' assign=SeniorityLevel ';'       // Seniority level to assign based on condition
+	    //'tasks' '=' tasks+=Task*                   // One task can only be applied to one rule, and rule should has priority
+	'}';
+
+enum SeniorityLevel:
+	trainee | junior | senior;
+
+enum Difficulty:
+	easy | moderate | hard;
+
+enum BOOLEAN:
+	True | False;
+
+TIME returns ecore::EString: INT ':' INT;            // HH:MM
+
+Condition:                                           // (duration > 180 OR difficulty = hard) AND shift = night;
+	OrCondition;
+
+OrCondition returns Condition:
+	AndCondition ({OrCondition.left=current} 'AND' right=PrimaryCondition)*;
+
+AndCondition returns Condition:
+	PrimaryCondition ({AndCondition.left=current} 'AND' right=PrimaryCondition)*;
+
+PrimaryCondition returns Condition:
+	'(' Condition ')' |
+	Comparison |
+	ShiftCondition;
+	
+Comparison:
+	attribute=TaskAttribute operator=ComparisonOperator value=INT;
+	
+TaskAttribute:
+	'duration' | 'difficulty';
+
+ComparisonOperator:
+	'<' | '<=' | '=' | '>=' | '>';
+	
+ShiftCondition:
+	'shift' '=' shift=ShiftType;
+
+enum ShiftType:
+	day | evening | night;
+

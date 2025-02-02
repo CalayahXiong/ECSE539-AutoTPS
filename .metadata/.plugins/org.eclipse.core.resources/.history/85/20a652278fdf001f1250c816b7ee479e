@@ -1,0 +1,77 @@
+package org.xtext.example.mydsl.analysis;
+
+import org.xtext.example.mydsl.myDsl.Model;
+import org.xtext.example.mydsl.myDsl.Task;
+import org.xtext.example.mydsl.myDsl.Worker;
+import org.xtext.example.mydsl.myDsl.Rule;
+import org.xtext.example.mydsl.myDsl.SeniorityLevel;
+
+import java.util.List;
+
+public class AutoTPS {
+
+    private Model model;
+
+    public AutoTPS(Model model) {
+        this.model = model;
+    }
+
+    public void assignTasks() {
+        List<Task> tasks = model.getTasks();
+        List<Worker> workers = model.getWorkers();
+        List<Rule> rules = model.getRules();
+
+        // Implement task assignment logic here
+        for (Task task : tasks) {
+            Worker assignedWorker = findWorkerForTask(task, workers, rules);
+            if (assignedWorker != null) {
+                System.out.println("Task " + task.getName() + " assigned to " + assignedWorker.getName());
+            } else {
+                System.out.println("No worker available for task " + task.getName());
+            }
+        }
+    }
+
+    private Worker findWorkerForTask(Task task, List<Worker> workers, List<Rule> rules) {
+        // Implement rule-based worker assignment logic here
+        for (Rule rule : rules) {
+            if (ruleMatchesTask(rule, task)) {
+                Worker worker = findAvailableWorker(workers, rule.getAssign());
+                if (worker != null) {
+                    return worker;
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean ruleMatchesTask(Rule rule, Task task) {
+        // Implement rule matching logic here
+        // Example: Check if task duration > 180 min, or if task is during nightshift, etc.
+        return false; // Placeholder
+    }
+
+    private Worker findAvailableWorker(List<Worker> workers, SeniorityLevel seniorityLevel) {
+        // Implement worker availability logic here
+        for (Worker worker : workers) {
+            if (worker.getSeniority().equals(seniorityLevel) && worker.getIsActive().equals("True")) {
+                return worker;
+            }
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        // Load the TPS model (e.g., from tasks.tps)
+        Model model = loadModel("data/tasks.tps");
+
+        // Create and run the AutoTPS tool
+        AutoTPS autoTPS = new AutoTPS(model);
+        autoTPS.assignTasks();
+    }
+
+    private static Model loadModel(String filePath) {
+        // Implement model loading logic here (e.g., using Xtext's resource API)
+        return null; // Placeholder
+    }
+}
