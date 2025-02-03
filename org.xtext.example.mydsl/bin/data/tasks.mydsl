@@ -34,10 +34,10 @@ task T2 {
 task T3 {
     difficulty = hard;
     duration = 30;
-    start = 24:00;
+    start = 00:00;
 }
 
 if > 180 min then senior; 
-if nightshift then junior;
+if shift = nightshift then junior;
 if easy then trainee;
 
