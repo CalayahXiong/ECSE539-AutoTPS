@@ -46,7 +46,7 @@ public class AutoTPS {
             
             if (assignedWorker != null) {
                 // When a worker is assigned
-                System.out.println(String.format("Task assignment to %s for task %s",
+                System.out.println(String.format("Task assignment to %s %s for task %s",
                 	assignedWorker.getSeniority(),
                     assignedWorker.getName(),
                     task.getName(),
@@ -72,18 +72,35 @@ public class AutoTPS {
         	}
         	return null;
         }
+        Boolean noMatchedRule = true;
     	// rule-based worker assignment logic
         for (Rule rule : rules) {
             if (ruleMatchesTask(rule, task)) {
+            	if (debug) {
+            		System.out.println("rule matched");
+            	}
+            	noMatchedRule = false;
                 Worker worker = findAvailableWorker(workers, rule.getAssign(), task);
                 if (worker != null) {
                     return worker;
+                }
+                else {
+                	if (debug) {
+                		System.out.println("cannot find a worker with this rule");
+                	}
                 }
             }
             else {
             	if (debug) {
             		System.out.println("rule not matched");
             	}
+            }
+        }
+        if (noMatchedRule) {
+        	System.out.println("no matched rule, finding a random available worker");
+        	Worker worker = findAvailableWorkerNoRule(workers, task);
+            if (worker != null) {
+                return worker;
             }
         }
         return null;
@@ -230,7 +247,24 @@ public class AutoTPS {
     private Worker findAvailableWorker(List<Worker> workers, SeniorityLevel seniorityLevel, Task task) {
         //  worker availability logic
         for (Worker worker : workers) {
-            if (worker.getSeniority().equals(seniorityLevel) && worker.getIsActive().equals("True")) {
+        	
+            if (worker.getSeniority().equals(seniorityLevel) && (Boolean)worker.getIsActive().toString().equals("True")) {
+                // the worker is available during the time slot
+            	if (isWorkerAvailable(worker, task)) {
+                	return worker;
+                }
+            	else {
+            		//System.out.println("this worker is not available");
+            	}
+            }
+        }
+        return null;
+    }
+    
+    private Worker findAvailableWorkerNoRule(List<Worker> workers, Task task) {
+        //  worker availability logic
+        for (Worker worker : workers) {
+            if (worker.getIsActive().equals("True")) {
                 // the worker is available during the time slot
             	if (isWorkerAvailable(worker, task)) {
                 	return worker;
@@ -280,6 +314,7 @@ public class AutoTPS {
             hours += 1;
             minutes -= 60;
         }
+        hours = hours % 24;
 
         return String.format("%02d:%02d", hours, minutes);
     }
