@@ -46,9 +46,9 @@ public class AutoTPS {
             
             if (assignedWorker != null) {
                 // When a worker is assigned
-                System.out.println(String.format("Task assignment to %s %s for task %s",
+                System.out.println(String.format("Task assignment to %s worker %s for task %s",
                 	assignedWorker.getSeniority(),
-                    assignedWorker.getName(),
+                	assignedWorker.getEmployeeNumber(),//assignedWorker.getName(),
                     task.getName(),
                     task.getStart().getHours(),
                     task.getStart().getMinutes(),
@@ -97,7 +97,9 @@ public class AutoTPS {
             }
         }
         if (noMatchedRule) {
-        	System.out.println("no matched rule, finding a random available worker");
+        	if (debug) {
+        		System.out.println("no matched rule, finding a random available worker");
+        	}
         	Worker worker = findAvailableWorkerNoRule(workers, task);
             if (worker != null) {
                 return worker;
@@ -264,7 +266,7 @@ public class AutoTPS {
     private Worker findAvailableWorkerNoRule(List<Worker> workers, Task task) {
         //  worker availability logic
         for (Worker worker : workers) {
-            if (worker.getIsActive().equals("True")) {
+            if (worker.getIsActive().toString().equals("True")) {
                 // the worker is available during the time slot
             	if (isWorkerAvailable(worker, task)) {
                 	return worker;
