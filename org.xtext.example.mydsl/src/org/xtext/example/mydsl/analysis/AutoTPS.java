@@ -29,7 +29,6 @@ public class AutoTPS {
 
     private Model model;
     private Map< Worker, List<Task> > assignments = new HashMap<>();
-    private Boolean debug = false;
 
     public AutoTPS(Model model) {
         this.model = model;
@@ -46,9 +45,16 @@ public class AutoTPS {
             
             if (assignedWorker != null) {
                 // When a worker is assigned
-                System.out.println(String.format("Task assignment to %s worker %s for task %s",
+            	if (assignments.containsKey(assignedWorker)) {
+                    assignments.get(assignedWorker).add(task);
+                } else {
+                    List<Task> workerTasks = new ArrayList<>();
+                    workerTasks.add(task);
+                    assignments.put(assignedWorker, workerTasks);
+                } 
+                System.out.println(String.format("Task assignment to %s %s for task %s from %02d:%02d to %s",
                 	assignedWorker.getSeniority(),
-                	assignedWorker.getEmployeeNumber(),//assignedWorker.getName(),
+                    assignedWorker.getId(),
                     task.getName(),
                     task.getStart().getHours(),
                     task.getStart().getMinutes(),
@@ -66,43 +72,13 @@ public class AutoTPS {
 
 
     private Worker findWorkerForTask(Task task, List<Worker> workers, List<Rule> rules) {
-        if (!isTaskInShift(task)) {
-        	if (debug) {
-        		System.out.println("task cannot be completed in a shift");
-        	}
-        	return null;
-        }
-        Boolean noMatchedRule = true;
-    	// rule-based worker assignment logic
+        // rule-based worker assignment logic
         for (Rule rule : rules) {
             if (ruleMatchesTask(rule, task)) {
-            	if (debug) {
-            		System.out.println("rule matched");
-            	}
-            	noMatchedRule = false;
                 Worker worker = findAvailableWorker(workers, rule.getAssign(), task);
                 if (worker != null) {
                     return worker;
                 }
-                else {
-                	if (debug) {
-                		System.out.println("cannot find a worker with this rule");
-                	}
-                }
-            }
-            else {
-            	if (debug) {
-            		System.out.println("rule not matched");
-            	}
-            }
-        }
-        if (noMatchedRule) {
-        	if (debug) {
-        		System.out.println("no matched rule, finding a random available worker");
-        	}
-        	Worker worker = findAvailableWorkerNoRule(workers, task);
-            if (worker != null) {
-                return worker;
             }
         }
         return null;
@@ -129,23 +105,11 @@ public class AutoTPS {
                    evaluateCondition(andCondition.getRight(), task);
         } else if (condition instanceof Comparison) {
             // Handle comparison conditions
-        	if (debug) {
-        		System.out.println("evaluating comparison");
-            	System.out.println(evaluateComparison((Comparison) condition, task));
-        	}
             return evaluateComparison((Comparison) condition, task);
         } else if (condition instanceof ShiftCondition) {
             // Handle shift conditions 
-        	if (debug) {
-        		System.out.println("evaluating shift");
-            	System.out.println(evaluateShiftCondition((ShiftCondition) condition, task));
-        	}
             return evaluateShiftCondition((ShiftCondition) condition, task);
         } else if (condition instanceof DifficultyCondition) {
-        	if (debug) {
-        		System.out.println("evaluating difficulty");
-            	System.out.println(evaluateDifficultyCondition((DifficultyCondition) condition, task));
-        	}
             // Handle difficulty conditions
             return evaluateDifficultyCondition((DifficultyCondition) condition, task);
         } else if (condition instanceof PrimaryCondition) {
@@ -193,42 +157,6 @@ public class AutoTPS {
         return difficulty.equals(task.getDifficulty().toString().toLowerCase());
     }
 
-    private Boolean isTaskInShift(Task task) {
-        //we want to make sure a task can be finished within a shift
-    	
-    	int start_hour = task.getStart().getHours();
-    	int start_minite = task.getStart().getMinutes();
-    	int duration = task.getDuration();
-    	int end_minite = start_minite + (int)(duration % 60);
-    	int end_hour = (start_hour + (int)(duration / 60)) % 24;
-    	if (end_minite >= 60) {
-    		end_minite -= 60;
-    		end_hour += 1;
-    	}
-    	
-        if (start_hour >= 6 && start_hour < 14) {
-            if (end_hour < 14 || (end_hour == 14 && end_minite == 0)) {
-            	return true;
-            }
-        	return false;
-        }
-        if (start_hour >= 14 && start_hour < 22) {
-            if (end_hour < 22 || (end_hour == 22 && end_minite == 0)) {
-            	return true;
-            }
-        	return false;
-        }
-        if (start_hour >= 22 || start_hour < 6) {
-            if (end_hour >= 22 || end_hour < 6 || (end_hour == 6 && end_minite == 0)) {
-            	return true;
-            }
-        	return false;
-        }
-        else {
-        	return false;
-        }
-    }
-
     private String getTaskShift(int h, int m) {
         // Parse the start time (HH:MM) and determine the shift
         //String[] parts = startTime.split(":");
@@ -249,24 +177,7 @@ public class AutoTPS {
     private Worker findAvailableWorker(List<Worker> workers, SeniorityLevel seniorityLevel, Task task) {
         //  worker availability logic
         for (Worker worker : workers) {
-        	
-            if (worker.getSeniority().equals(seniorityLevel) && (Boolean)worker.getIsActive().toString().equals("True")) {
-                // the worker is available during the time slot
-            	if (isWorkerAvailable(worker, task)) {
-                	return worker;
-                }
-            	else {
-            		//System.out.println("this worker is not available");
-            	}
-            }
-        }
-        return null;
-    }
-    
-    private Worker findAvailableWorkerNoRule(List<Worker> workers, Task task) {
-        //  worker availability logic
-        for (Worker worker : workers) {
-            if (worker.getIsActive().toString().equals("True")) {
+            if (worker.getSeniority().equals(seniorityLevel) && worker.getIsActive().toString().equals("True")) {
                 // the worker is available during the time slot
             	if (isWorkerAvailable(worker, task)) {
                 	return worker;
@@ -281,10 +192,6 @@ public class AutoTPS {
     	List<Task> assignedTasks = assignments.getOrDefault(worker, new ArrayList<>());
     	for (Task assignedTask : assignedTasks) {
     		if (isOverlapping(assignedTask, task)) {
-    			if (debug) {
-    				System.out.println("worker not available");
-    			}
-    			
     			return false;
     		}
     	}
@@ -292,8 +199,8 @@ public class AutoTPS {
 	}
 
 	private boolean isOverlapping(Task t1, Task t2) {
-		String t1Start = t1.getStart().toString();
-		String t2Start = t2.getStart().toString();
+		String t1Start = t1.getStart().getHours() + ":" + t1.getStart().getMinutes();
+		String t2Start = t2.getStart().getHours() + ":" + t2.getStart().getMinutes();
 		String t1End = calculateEndTime(t1);
 		String t2End = calculateEndTime(t2);
 		
@@ -316,7 +223,6 @@ public class AutoTPS {
             hours += 1;
             minutes -= 60;
         }
-        hours = hours % 24;
 
         return String.format("%02d:%02d", hours, minutes);
     }

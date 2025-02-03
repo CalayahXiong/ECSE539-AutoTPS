@@ -37,7 +37,6 @@ task T3 {
     start = 00:00;
 }
 
-if > 180 min then senior; 
-if shift = nightshift then junior;
-if easy then trainee;
+if(>150 min OR hard)then senior;
+if((easy AND < 180 min) OR dayshift) then trainee;
 
