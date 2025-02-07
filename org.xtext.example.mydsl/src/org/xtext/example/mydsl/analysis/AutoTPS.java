@@ -33,42 +33,138 @@ public class AutoTPS {
     public AutoTPS(Model model) {
         this.model = model;
     }
-
+    
     public void assignTasks() {
         List<Task> tasks = model.getTasks();
         List<Worker> workers = model.getWorkers();
         List<Rule> rules = model.getRules();
 
-        // Task assignment logic
+        assignments.clear(); //initialize
+        
+        // For each task, try to assign it
         for (Task task : tasks) {
-            Worker assignedWorker = findWorkerForTask(task, workers, rules);
+            boolean taskAssigned = false;
+            boolean ruleMatched = false;
             
-            if (assignedWorker != null) {
-                // When a worker is assigned
-            	if (assignments.containsKey(assignedWorker)) {
-                    assignments.get(assignedWorker).add(task);
-                } else {
-                    List<Task> workerTasks = new ArrayList<>();
-                    workerTasks.add(task);
-                    assignments.put(assignedWorker, workerTasks);
-                } 
-                System.out.println(String.format("Task assignment to %s %s for task %s from %02d:%02d to %s",
-                	assignedWorker.getSeniority(),
-                    assignedWorker.getId(),
-                    task.getName(),
-                    task.getStart().getHours(),
-                    task.getStart().getMinutes(),
-                    calculateEndTime(task)));
-            } else {
-                // Print the tasks and the time range
-                System.out.println(String.format("%s not possible from %02d:%02d to %s", 
-                    String.join(", ", task.getName()),
-                    task.getStart().getHours(),
-                    task.getStart().getMinutes(),
-                    calculateEndTime(task)));
+            // Process each rule
+            for (Rule rule : rules) {
+                if (ruleMatchesTask(rule, task)) {
+                    ruleMatched = true;
+                    // Find all candidate workers: active and with required seniority.
+                    List<Worker> candidates = new ArrayList<>();
+                    for (Worker worker : workers) {
+                        if (worker.getSeniority().equals(rule.getAssign())
+                                && worker.getIsActive().toString().equals("True")) {
+                            candidates.add(worker);
+                        }
+                    }
+                    
+                    // no active worker with required seniority exists
+                    if (candidates.isEmpty()) {
+                        System.out.println(String.format("Task assignment for task %s not possible (all conditions false / no active worker with required seniority exists).", task.getName()));
+                        taskAssigned = true;  // consider the task as "processed"
+                        break; 
+                    }
+                    
+                    // have possible employees, the check candidates for availability
+                    for (Worker candidate : candidates) {
+                        if (isWorkerAvailable(candidate, task)) {
+                            // Candidate is available; assign the task.
+                            taskAssigned = true;
+                            if (assignments.containsKey(candidate)) {
+                                assignments.get(candidate).add(task);
+                            } else {
+                                List<Task> candidateTasks = new ArrayList<>();
+                                candidateTasks.add(task);
+                                assignments.put(candidate, candidateTasks);
+                            }
+                            System.out.println(String.format(
+                                "Task assignment to %s %s for task %s from %02d:%02d to %s.",
+                                candidate.getSeniority(),
+                                candidate.getName(),  
+                                task.getName(),
+                                task.getStart().getHours(),
+                                task.getStart().getMinutes(),
+                                calculateEndTime(task)));
+                            break; 
+                        } else {
+                            // Candidate is not available; find the overlapping task. //!!! need changes for traversing all overlapping ones
+                            Task overlappingTask = getOverlappingTask(candidate, task);
+                            System.out.println(String.format(
+                                "Task assignment to %s for task %s not possible from %02d:%02d to %s due to %s.",
+                                candidate.getSeniority(),
+                                task.getName(),
+                                task.getStart().getHours(),
+                                task.getStart().getMinutes(),
+                                calculateEndTime(overlappingTask),
+                                overlappingTask.getName()));
+                        }
+                    }
+                    if (taskAssigned) {
+                        break;
+                    }
+                }
+            }
+            // If no rule matched the task or if no candidate worker was found/available,
+            if (!taskAssigned && !ruleMatched) {
+                System.out.println(String.format("Task assignment for task %s not possible (all conditions false / no active worker with required seniority exists).", task.getName()));
             }
         }
     }
+
+/**
+ * public void assignTasks() {
+        List<Task> tasks = model.getTasks();
+        List<Worker> workers = model.getWorkers();
+        List<Rule> rules = model.getRules();
+        
+        Worker assignedWorker = null;
+        
+        // Task assignment logic
+        for (Task task : tasks) {
+        	for (Rule rule : rules) {
+        		if (ruleMatchesTask(rule, task)) {
+        			for (Worker worker : workers) {
+        				if (worker.getSeniority().equals(rule.getAssign()) && worker.getIsActive().toString().equals("True")) {
+        					// Worker is compatible for all
+        					if (isWorkerAvailable(worker, task)) {
+        						assignedWorker = worker;
+        						// When a worker is assigned
+        		            	if (assignments.containsKey(assignedWorker)) {
+        		                    assignments.get(assignedWorker).add(task);
+        		                } else {
+        		                    List<Task> workerTasks = new ArrayList<>();
+        		                    workerTasks.add(task);
+        		                    assignments.put(assignedWorker, workerTasks);
+        		                } 
+        		                System.out.println(String.format("Task assignment to %s for task %s from %02d:%02d to %s",
+        		                	assignedWorker.getSeniority(),
+        		                    //assignedWorker.getName(),
+        		                    task.getName(),
+        		                    task.getStart().getHours(),
+        		                    task.getStart().getMinutes(),
+        		                    calculateEndTime(task)));
+        		            } 
+        					// Worker is compatible for all conditions except that time schedule is unavailable
+        					else {
+        						//find the overlapping task
+        						Task overlappingTask = getOverlappingTask(worker, task);
+        						// Print the tasks and the time range
+        		                System.out.println(String.format("%s not possible from %02d:%02d to %s", 
+        		                    String.join(", ", task.getName()),
+        		                    task.getStart().getHours(),
+        		                    task.getStart().getMinutes(),
+        		                    //calculateEndTime(task)));
+        		                	calculateEndTime(overlappingTask)));
+        					}
+        				}
+        			}
+        		}
+        	}
+        }
+    }
+ */
+    
 
 
     private Worker findWorkerForTask(Task task, List<Worker> workers, List<Rule> rules) {
@@ -206,6 +302,18 @@ public class AutoTPS {
 		
 		return t1End.compareTo(t2Start) > 0 || t2End.compareTo(t1Start)> 0;		
 	}
+	
+	private Task getOverlappingTask(Worker worker, Task t) {
+		List<Task> assignedTasks = assignments.getOrDefault(worker, new ArrayList<>());
+		for (Task assignedTask : assignedTasks) {
+			if (isOverlapping(assignedTask, t)) {
+				return assignedTask;
+			}
+		}
+		return null;
+
+	}
+
 
 	private String calculateEndTime(Task task) {
         // Calculate the end time of the task based on its start time and duration
@@ -219,7 +327,7 @@ public class AutoTPS {
         hours += durationHours;
         minutes += durationMinutes;
 
-        if (minutes >= 60) {
+        while (minutes >= 60) {
             hours += 1;
             minutes -= 60;
         }
@@ -229,7 +337,7 @@ public class AutoTPS {
 
     public static void main(String[] args) {
         // Load the TPS model 
-        Model model = loadModel("src/data/tasks.mydsl");
+        Model model = loadModel("src/data/tasks2.mydsl");
 
         // Create and run the AutoTPS tool
         AutoTPS autoTPS = new AutoTPS(model);

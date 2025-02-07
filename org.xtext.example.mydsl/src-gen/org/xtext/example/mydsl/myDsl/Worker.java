@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.xtext.example.mydsl.myDsl.Worker#getId <em>Id</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.Worker#getName <em>Name</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.Worker#getSeniority <em>Seniority</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.Worker#getEmployeeNumber <em>Employee Number</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.Worker#getIsActive <em>Is Active</em>}</li>
  * </ul>
  *
@@ -95,28 +94,6 @@ public interface Worker extends EObject
    * @generated
    */
   void setSeniority(SeniorityLevel value);
-
-  /**
-   * Returns the value of the '<em><b>Employee Number</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Employee Number</em>' attribute.
-   * @see #setEmployeeNumber(int)
-   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getWorker_EmployeeNumber()
-   * @model
-   * @generated
-   */
-  int getEmployeeNumber();
-
-  /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.Worker#getEmployeeNumber <em>Employee Number</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Employee Number</em>' attribute.
-   * @see #getEmployeeNumber()
-   * @generated
-   */
-  void setEmployeeNumber(int value);
 
   /**
    * Returns the value of the '<em><b>Is Active</b></em>' attribute.

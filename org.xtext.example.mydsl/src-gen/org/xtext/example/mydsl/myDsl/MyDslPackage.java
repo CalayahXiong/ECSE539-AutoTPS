@@ -142,22 +142,13 @@ public interface MyDslPackage extends EPackage
   int WORKER__SENIORITY = 2;
 
   /**
-   * The feature id for the '<em><b>Employee Number</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKER__EMPLOYEE_NUMBER = 3;
-
-  /**
    * The feature id for the '<em><b>Is Active</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int WORKER__IS_ACTIVE = 4;
+  int WORKER__IS_ACTIVE = 3;
 
   /**
    * The number of structural features of the '<em>Worker</em>' class.
@@ -166,7 +157,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WORKER_FEATURE_COUNT = 5;
+  int WORKER_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.TaskImpl <em>Task</em>}' class.
@@ -639,17 +630,6 @@ public interface MyDslPackage extends EPackage
   EAttribute getWorker_Seniority();
 
   /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.Worker#getEmployeeNumber <em>Employee Number</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Employee Number</em>'.
-   * @see org.xtext.example.mydsl.myDsl.Worker#getEmployeeNumber()
-   * @see #getWorker()
-   * @generated
-   */
-  EAttribute getWorker_EmployeeNumber();
-
-  /**
    * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.Worker#getIsActive <em>Is Active</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1077,14 +1057,6 @@ public interface MyDslPackage extends EPackage
      * @generated
      */
     EAttribute WORKER__SENIORITY = eINSTANCE.getWorker_Seniority();
-
-    /**
-     * The meta object literal for the '<em><b>Employee Number</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute WORKER__EMPLOYEE_NUMBER = eINSTANCE.getWorker_EmployeeNumber();
 
     /**
      * The meta object literal for the '<em><b>Is Active</b></em>' attribute feature.

@@ -270,7 +270,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.SHIFT_CONDITION__SHIFT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getShiftConditionAccess().getShiftShiftEnumRuleCall_2_0(), semanticObject.getShift());
+		feeder.accept(grammarAccess.getShiftConditionAccess().getShiftShiftEnumRuleCall_0(), semanticObject.getShift());
 		feeder.finish();
 	}
 	
@@ -333,7 +333,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     Worker returns Worker
 	 *
 	 * Constraint:
-	 *     (id=ID name=STRING seniority=SeniorityLevel employeeNumber=INT isActive=Boolean)
+	 *     (id=ID name=STRING seniority=SeniorityLevel isActive=Boolean)
 	 * </pre>
 	 */
 	protected void sequence_Worker(ISerializationContext context, Worker semanticObject) {
@@ -344,8 +344,6 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.WORKER__NAME));
 			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.WORKER__SENIORITY) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.WORKER__SENIORITY));
-			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.WORKER__EMPLOYEE_NUMBER) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.WORKER__EMPLOYEE_NUMBER));
 			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.WORKER__IS_ACTIVE) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.WORKER__IS_ACTIVE));
 		}
@@ -353,8 +351,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 		feeder.accept(grammarAccess.getWorkerAccess().getIdIDTerminalRuleCall_1_0(), semanticObject.getId());
 		feeder.accept(grammarAccess.getWorkerAccess().getNameSTRINGTerminalRuleCall_5_0(), semanticObject.getName());
 		feeder.accept(grammarAccess.getWorkerAccess().getSenioritySeniorityLevelEnumRuleCall_9_0(), semanticObject.getSeniority());
-		feeder.accept(grammarAccess.getWorkerAccess().getEmployeeNumberINTTerminalRuleCall_13_0(), semanticObject.getEmployeeNumber());
-		feeder.accept(grammarAccess.getWorkerAccess().getIsActiveBooleanEnumRuleCall_17_0(), semanticObject.getIsActive());
+		feeder.accept(grammarAccess.getWorkerAccess().getIsActiveBooleanEnumRuleCall_13_0(), semanticObject.getIsActive());
 		feeder.finish();
 	}
 	

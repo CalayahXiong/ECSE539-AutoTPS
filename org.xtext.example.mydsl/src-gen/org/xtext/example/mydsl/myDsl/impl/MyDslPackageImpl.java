@@ -304,20 +304,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * @generated
    */
   @Override
-  public EAttribute getWorker_EmployeeNumber()
-  {
-    return (EAttribute)workerEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EAttribute getWorker_IsActive()
   {
-    return (EAttribute)workerEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)workerEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -701,7 +690,6 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     createEAttribute(workerEClass, WORKER__ID);
     createEAttribute(workerEClass, WORKER__NAME);
     createEAttribute(workerEClass, WORKER__SENIORITY);
-    createEAttribute(workerEClass, WORKER__EMPLOYEE_NUMBER);
     createEAttribute(workerEClass, WORKER__IS_ACTIVE);
 
     taskEClass = createEClass(TASK);
@@ -794,7 +782,6 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     initEAttribute(getWorker_Id(), ecorePackage.getEString(), "id", null, 0, 1, Worker.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getWorker_Name(), ecorePackage.getEString(), "name", null, 0, 1, Worker.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getWorker_Seniority(), this.getSeniorityLevel(), "seniority", null, 0, 1, Worker.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getWorker_EmployeeNumber(), ecorePackage.getEInt(), "employeeNumber", null, 0, 1, Worker.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getWorker_IsActive(), this.getBoolean(), "isActive", null, 0, 1, Worker.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

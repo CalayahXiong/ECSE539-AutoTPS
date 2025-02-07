@@ -81,17 +81,12 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 		private final Assignment cSeniorityAssignment_9 = (Assignment)cGroup.eContents().get(9);
 		private final RuleCall cSenioritySeniorityLevelEnumRuleCall_9_0 = (RuleCall)cSeniorityAssignment_9.eContents().get(0);
 		private final Keyword cSemicolonKeyword_10 = (Keyword)cGroup.eContents().get(10);
-		private final Keyword cEmployeeNumberKeyword_11 = (Keyword)cGroup.eContents().get(11);
+		private final Keyword cActiveKeyword_11 = (Keyword)cGroup.eContents().get(11);
 		private final Keyword cEqualsSignKeyword_12 = (Keyword)cGroup.eContents().get(12);
-		private final Assignment cEmployeeNumberAssignment_13 = (Assignment)cGroup.eContents().get(13);
-		private final RuleCall cEmployeeNumberINTTerminalRuleCall_13_0 = (RuleCall)cEmployeeNumberAssignment_13.eContents().get(0);
+		private final Assignment cIsActiveAssignment_13 = (Assignment)cGroup.eContents().get(13);
+		private final RuleCall cIsActiveBooleanEnumRuleCall_13_0 = (RuleCall)cIsActiveAssignment_13.eContents().get(0);
 		private final Keyword cSemicolonKeyword_14 = (Keyword)cGroup.eContents().get(14);
-		private final Keyword cActiveKeyword_15 = (Keyword)cGroup.eContents().get(15);
-		private final Keyword cEqualsSignKeyword_16 = (Keyword)cGroup.eContents().get(16);
-		private final Assignment cIsActiveAssignment_17 = (Assignment)cGroup.eContents().get(17);
-		private final RuleCall cIsActiveBooleanEnumRuleCall_17_0 = (RuleCall)cIsActiveAssignment_17.eContents().get(0);
-		private final Keyword cSemicolonKeyword_18 = (Keyword)cGroup.eContents().get(18);
-		private final Keyword cRightCurlyBracketKeyword_19 = (Keyword)cGroup.eContents().get(19);
+		private final Keyword cRightCurlyBracketKeyword_15 = (Keyword)cGroup.eContents().get(15);
 		
 		///**
 		// * worker W1 {
@@ -105,7 +100,7 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 		//    'worker' id=ID '{'
 		//        'name' '=' name=STRING ';'
 		//        'seniority' '=' seniority=SeniorityLevel ';'
-		//        'employeeNumber' '=' employeeNumber=INT ';'
+		//        //'employeeNumber' '=' employeeNumber=INT ';'
 		//        'active' '=' isActive=Boolean ';'
 		//    '}';
 		@Override public ParserRule getRule() { return rule; }
@@ -113,7 +108,7 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 		//'worker' id=ID '{'
 		//    'name' '=' name=STRING ';'
 		//    'seniority' '=' seniority=SeniorityLevel ';'
-		//    'employeeNumber' '=' employeeNumber=INT ';'
+		//    //'employeeNumber' '=' employeeNumber=INT ';'
 		//    'active' '=' isActive=Boolean ';'
 		//'}'
 		public Group getGroup() { return cGroup; }
@@ -160,38 +155,24 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 		//';'
 		public Keyword getSemicolonKeyword_10() { return cSemicolonKeyword_10; }
 		
-		//'employeeNumber'
-		public Keyword getEmployeeNumberKeyword_11() { return cEmployeeNumberKeyword_11; }
+		////'employeeNumber' '=' employeeNumber=INT ';'
+		//'active'
+		public Keyword getActiveKeyword_11() { return cActiveKeyword_11; }
 		
 		//'='
 		public Keyword getEqualsSignKeyword_12() { return cEqualsSignKeyword_12; }
 		
-		//employeeNumber=INT
-		public Assignment getEmployeeNumberAssignment_13() { return cEmployeeNumberAssignment_13; }
+		//isActive=Boolean
+		public Assignment getIsActiveAssignment_13() { return cIsActiveAssignment_13; }
 		
-		//INT
-		public RuleCall getEmployeeNumberINTTerminalRuleCall_13_0() { return cEmployeeNumberINTTerminalRuleCall_13_0; }
+		//Boolean
+		public RuleCall getIsActiveBooleanEnumRuleCall_13_0() { return cIsActiveBooleanEnumRuleCall_13_0; }
 		
 		//';'
 		public Keyword getSemicolonKeyword_14() { return cSemicolonKeyword_14; }
 		
-		//'active'
-		public Keyword getActiveKeyword_15() { return cActiveKeyword_15; }
-		
-		//'='
-		public Keyword getEqualsSignKeyword_16() { return cEqualsSignKeyword_16; }
-		
-		//isActive=Boolean
-		public Assignment getIsActiveAssignment_17() { return cIsActiveAssignment_17; }
-		
-		//Boolean
-		public RuleCall getIsActiveBooleanEnumRuleCall_17_0() { return cIsActiveBooleanEnumRuleCall_17_0; }
-		
-		//';'
-		public Keyword getSemicolonKeyword_18() { return cSemicolonKeyword_18; }
-		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_19() { return cRightCurlyBracketKeyword_19; }
+		public Keyword getRightCurlyBracketKeyword_15() { return cRightCurlyBracketKeyword_15; }
 	}
 	public class TaskElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.mydsl.MyDsl.Task");
@@ -517,11 +498,8 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	}
 	public class ShiftConditionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.mydsl.MyDsl.ShiftCondition");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cShiftKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cShiftAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cShiftShiftEnumRuleCall_2_0 = (RuleCall)cShiftAssignment_2.eContents().get(0);
+		private final Assignment cShiftAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cShiftShiftEnumRuleCall_0 = (RuleCall)cShiftAssignment.eContents().get(0);
 		
 		// /**
 		//  * PrimaryCondition returns Condition:
@@ -532,23 +510,14 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 		//    Comparison | ShiftCondition | DifficultyCondition;
 		//  */
 		//ShiftCondition:
-		//    'shift' '=' shift=Shift;
+		//    shift=Shift;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'shift' '=' shift=Shift
-		public Group getGroup() { return cGroup; }
-		
-		//'shift'
-		public Keyword getShiftKeyword_0() { return cShiftKeyword_0; }
-		
-		//'='
-		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
-		
 		//shift=Shift
-		public Assignment getShiftAssignment_2() { return cShiftAssignment_2; }
+		public Assignment getShiftAssignment() { return cShiftAssignment; }
 		
 		//Shift
-		public RuleCall getShiftShiftEnumRuleCall_2_0() { return cShiftShiftEnumRuleCall_2_0; }
+		public RuleCall getShiftShiftEnumRuleCall_0() { return cShiftShiftEnumRuleCall_0; }
 	}
 	public class ComparisonElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.mydsl.MyDsl.Comparison");
@@ -816,7 +785,7 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    'worker' id=ID '{'
 	//        'name' '=' name=STRING ';'
 	//        'seniority' '=' seniority=SeniorityLevel ';'
-	//        'employeeNumber' '=' employeeNumber=INT ';'
+	//        //'employeeNumber' '=' employeeNumber=INT ';'
 	//        'active' '=' isActive=Boolean ';'
 	//    '}';
 	public WorkerElements getWorkerAccess() {
@@ -959,7 +928,7 @@ public class MyDslGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    Comparison | ShiftCondition | DifficultyCondition;
 	//  */
 	//ShiftCondition:
-	//    'shift' '=' shift=Shift;
+	//    shift=Shift;
 	public ShiftConditionElements getShiftConditionAccess() {
 		return pShiftCondition;
 	}

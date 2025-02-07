@@ -46,7 +46,6 @@ public class MyDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAndConditionAccess().getGroup(), "rule__AndCondition__Group__0");
 			builder.put(grammarAccess.getAndConditionAccess().getGroup_1(), "rule__AndCondition__Group_1__0");
 			builder.put(grammarAccess.getPrimaryConditionAccess().getGroup_0(), "rule__PrimaryCondition__Group_0__0");
-			builder.put(grammarAccess.getShiftConditionAccess().getGroup(), "rule__ShiftCondition__Group__0");
 			builder.put(grammarAccess.getComparisonAccess().getGroup(), "rule__Comparison__Group__0");
 			builder.put(grammarAccess.getModelAccess().getWorkersAssignment_0(), "rule__Model__WorkersAssignment_0");
 			builder.put(grammarAccess.getModelAccess().getTasksAssignment_1(), "rule__Model__TasksAssignment_1");
@@ -54,8 +53,7 @@ public class MyDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getWorkerAccess().getIdAssignment_1(), "rule__Worker__IdAssignment_1");
 			builder.put(grammarAccess.getWorkerAccess().getNameAssignment_5(), "rule__Worker__NameAssignment_5");
 			builder.put(grammarAccess.getWorkerAccess().getSeniorityAssignment_9(), "rule__Worker__SeniorityAssignment_9");
-			builder.put(grammarAccess.getWorkerAccess().getEmployeeNumberAssignment_13(), "rule__Worker__EmployeeNumberAssignment_13");
-			builder.put(grammarAccess.getWorkerAccess().getIsActiveAssignment_17(), "rule__Worker__IsActiveAssignment_17");
+			builder.put(grammarAccess.getWorkerAccess().getIsActiveAssignment_13(), "rule__Worker__IsActiveAssignment_13");
 			builder.put(grammarAccess.getTaskAccess().getNameAssignment_1(), "rule__Task__NameAssignment_1");
 			builder.put(grammarAccess.getTaskAccess().getDifficultyAssignment_5(), "rule__Task__DifficultyAssignment_5");
 			builder.put(grammarAccess.getTaskAccess().getDurationAssignment_9(), "rule__Task__DurationAssignment_9");
@@ -67,7 +65,7 @@ public class MyDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getOrConditionAccess().getRightAssignment_1_2(), "rule__OrCondition__RightAssignment_1_2");
 			builder.put(grammarAccess.getAndConditionAccess().getRightAssignment_1_2(), "rule__AndCondition__RightAssignment_1_2");
 			builder.put(grammarAccess.getPrimaryConditionAccess().getInnerAssignment_0_2(), "rule__PrimaryCondition__InnerAssignment_0_2");
-			builder.put(grammarAccess.getShiftConditionAccess().getShiftAssignment_2(), "rule__ShiftCondition__ShiftAssignment_2");
+			builder.put(grammarAccess.getShiftConditionAccess().getShiftAssignment(), "rule__ShiftCondition__ShiftAssignment");
 			builder.put(grammarAccess.getComparisonAccess().getOperatorAssignment_0(), "rule__Comparison__OperatorAssignment_0");
 			builder.put(grammarAccess.getComparisonAccess().getDurationAssignment_1(), "rule__Comparison__DurationAssignment_1");
 			builder.put(grammarAccess.getDifficultyConditionAccess().getDifficultyAssignment(), "rule__DifficultyCondition__DifficultyAssignment");

@@ -240,9 +240,9 @@ ruleWorker returns [EObject current=null]
 		{
 			newLeafNode(otherlv_10, grammarAccess.getWorkerAccess().getSemicolonKeyword_10());
 		}
-		otherlv_11='employeeNumber'
+		otherlv_11='active'
 		{
-			newLeafNode(otherlv_11, grammarAccess.getWorkerAccess().getEmployeeNumberKeyword_11());
+			newLeafNode(otherlv_11, grammarAccess.getWorkerAccess().getActiveKeyword_11());
 		}
 		otherlv_12='='
 		{
@@ -250,40 +250,10 @@ ruleWorker returns [EObject current=null]
 		}
 		(
 			(
-				lv_employeeNumber_13_0=RULE_INT
 				{
-					newLeafNode(lv_employeeNumber_13_0, grammarAccess.getWorkerAccess().getEmployeeNumberINTTerminalRuleCall_13_0());
+					newCompositeNode(grammarAccess.getWorkerAccess().getIsActiveBooleanEnumRuleCall_13_0());
 				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getWorkerRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"employeeNumber",
-						lv_employeeNumber_13_0,
-						"org.eclipse.xtext.common.Terminals.INT");
-				}
-			)
-		)
-		otherlv_14=';'
-		{
-			newLeafNode(otherlv_14, grammarAccess.getWorkerAccess().getSemicolonKeyword_14());
-		}
-		otherlv_15='active'
-		{
-			newLeafNode(otherlv_15, grammarAccess.getWorkerAccess().getActiveKeyword_15());
-		}
-		otherlv_16='='
-		{
-			newLeafNode(otherlv_16, grammarAccess.getWorkerAccess().getEqualsSignKeyword_16());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getWorkerAccess().getIsActiveBooleanEnumRuleCall_17_0());
-				}
-				lv_isActive_17_0=ruleBoolean
+				lv_isActive_13_0=ruleBoolean
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getWorkerRule());
@@ -291,19 +261,19 @@ ruleWorker returns [EObject current=null]
 					set(
 						$current,
 						"isActive",
-						lv_isActive_17_0,
+						lv_isActive_13_0,
 						"org.xtext.example.mydsl.MyDsl.Boolean");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_18=';'
+		otherlv_14=';'
 		{
-			newLeafNode(otherlv_18, grammarAccess.getWorkerAccess().getSemicolonKeyword_18());
+			newLeafNode(otherlv_14, grammarAccess.getWorkerAccess().getSemicolonKeyword_14());
 		}
-		otherlv_19='}'
+		otherlv_15='}'
 		{
-			newLeafNode(otherlv_19, grammarAccess.getWorkerAccess().getRightCurlyBracketKeyword_19());
+			newLeafNode(otherlv_15, grammarAccess.getWorkerAccess().getRightCurlyBracketKeyword_15());
 		}
 	)
 ;
@@ -818,32 +788,22 @@ ruleShiftCondition returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='shift'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getShiftConditionAccess().getShiftKeyword_0());
-		}
-		otherlv_1='='
-		{
-			newLeafNode(otherlv_1, grammarAccess.getShiftConditionAccess().getEqualsSignKeyword_1());
-		}
 		(
-			(
-				{
-					newCompositeNode(grammarAccess.getShiftConditionAccess().getShiftShiftEnumRuleCall_2_0());
+			{
+				newCompositeNode(grammarAccess.getShiftConditionAccess().getShiftShiftEnumRuleCall_0());
+			}
+			lv_shift_0_0=ruleShift
+			{
+				if ($current==null) {
+					$current = createModelElementForParent(grammarAccess.getShiftConditionRule());
 				}
-				lv_shift_2_0=ruleShift
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getShiftConditionRule());
-					}
-					set(
-						$current,
-						"shift",
-						lv_shift_2_0,
-						"org.xtext.example.mydsl.MyDsl.Shift");
-					afterParserOrEnumRuleCall();
-				}
-			)
+				set(
+					$current,
+					"shift",
+					lv_shift_0_0,
+					"org.xtext.example.mydsl.MyDsl.Shift");
+				afterParserOrEnumRuleCall();
+			}
 		)
 	)
 ;

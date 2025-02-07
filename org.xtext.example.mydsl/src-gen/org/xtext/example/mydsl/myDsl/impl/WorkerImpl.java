@@ -25,7 +25,6 @@ import org.xtext.example.mydsl.myDsl.Worker;
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.WorkerImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.WorkerImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.WorkerImpl#getSeniority <em>Seniority</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.impl.WorkerImpl#getEmployeeNumber <em>Employee Number</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.WorkerImpl#getIsActive <em>Is Active</em>}</li>
  * </ul>
  *
@@ -92,26 +91,6 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
    * @ordered
    */
   protected SeniorityLevel seniority = SENIORITY_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getEmployeeNumber() <em>Employee Number</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEmployeeNumber()
-   * @generated
-   * @ordered
-   */
-  protected static final int EMPLOYEE_NUMBER_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getEmployeeNumber() <em>Employee Number</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEmployeeNumber()
-   * @generated
-   * @ordered
-   */
-  protected int employeeNumber = EMPLOYEE_NUMBER_EDEFAULT;
 
   /**
    * The default value of the '{@link #getIsActive() <em>Is Active</em>}' attribute.
@@ -235,31 +214,6 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
    * @generated
    */
   @Override
-  public int getEmployeeNumber()
-  {
-    return employeeNumber;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setEmployeeNumber(int newEmployeeNumber)
-  {
-    int oldEmployeeNumber = employeeNumber;
-    employeeNumber = newEmployeeNumber;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.WORKER__EMPLOYEE_NUMBER, oldEmployeeNumber, employeeNumber));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public org.xtext.example.mydsl.myDsl.Boolean getIsActive()
   {
     return isActive;
@@ -295,8 +249,6 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
         return getName();
       case MyDslPackage.WORKER__SENIORITY:
         return getSeniority();
-      case MyDslPackage.WORKER__EMPLOYEE_NUMBER:
-        return getEmployeeNumber();
       case MyDslPackage.WORKER__IS_ACTIVE:
         return getIsActive();
     }
@@ -321,9 +273,6 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
         return;
       case MyDslPackage.WORKER__SENIORITY:
         setSeniority((SeniorityLevel)newValue);
-        return;
-      case MyDslPackage.WORKER__EMPLOYEE_NUMBER:
-        setEmployeeNumber((Integer)newValue);
         return;
       case MyDslPackage.WORKER__IS_ACTIVE:
         setIsActive((org.xtext.example.mydsl.myDsl.Boolean)newValue);
@@ -351,9 +300,6 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
       case MyDslPackage.WORKER__SENIORITY:
         setSeniority(SENIORITY_EDEFAULT);
         return;
-      case MyDslPackage.WORKER__EMPLOYEE_NUMBER:
-        setEmployeeNumber(EMPLOYEE_NUMBER_EDEFAULT);
-        return;
       case MyDslPackage.WORKER__IS_ACTIVE:
         setIsActive(IS_ACTIVE_EDEFAULT);
         return;
@@ -377,8 +323,6 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case MyDslPackage.WORKER__SENIORITY:
         return seniority != SENIORITY_EDEFAULT;
-      case MyDslPackage.WORKER__EMPLOYEE_NUMBER:
-        return employeeNumber != EMPLOYEE_NUMBER_EDEFAULT;
       case MyDslPackage.WORKER__IS_ACTIVE:
         return isActive != IS_ACTIVE_EDEFAULT;
     }
@@ -402,8 +346,6 @@ public class WorkerImpl extends MinimalEObjectImpl.Container implements Worker
     result.append(name);
     result.append(", seniority: ");
     result.append(seniority);
-    result.append(", employeeNumber: ");
-    result.append(employeeNumber);
     result.append(", isActive: ");
     result.append(isActive);
     result.append(')');

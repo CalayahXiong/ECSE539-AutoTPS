@@ -63,7 +63,6 @@ public class WorkerItemProvider
 
 			addNamePropertyDescriptor(object);
 			addSeniorityPropertyDescriptor(object);
-			addEmployeeNumberPropertyDescriptor(object);
 			addIsActivePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -109,28 +108,6 @@ public class WorkerItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Employee Number feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addEmployeeNumberPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Worker_employeeNumber_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Worker_employeeNumber_feature", "_UI_Worker_type"),
-				 MyDslPackage.Literals.WORKER__EMPLOYEE_NUMBER,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -197,7 +174,6 @@ public class WorkerItemProvider
 		switch (notification.getFeatureID(Worker.class)) {
 			case MyDslPackage.WORKER__NAME:
 			case MyDslPackage.WORKER__SENIORITY:
-			case MyDslPackage.WORKER__EMPLOYEE_NUMBER:
 			case MyDslPackage.WORKER__IS_ACTIVE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;

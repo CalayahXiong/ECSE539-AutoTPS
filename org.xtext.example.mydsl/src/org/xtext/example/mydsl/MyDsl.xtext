@@ -19,7 +19,7 @@ Worker:
 	'worker' id=ID '{'
 		'name' '=' name=STRING ';'
 		'seniority' '=' seniority=SeniorityLevel ';'
-		'employeeNumber' '=' employeeNumber=INT ';'
+		//'employeeNumber' '=' employeeNumber=INT ';'
 		'active' '=' isActive=Boolean ';'
 	'}';
 
@@ -89,7 +89,7 @@ SimpleCondition returns Condition:
 
 
 ShiftCondition:
-    'shift' '=' shift=Shift;
+    shift=Shift;
  
 enum Shift:
 	nightshift | dayshift | eveningshift;
