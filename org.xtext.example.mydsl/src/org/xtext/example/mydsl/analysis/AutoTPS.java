@@ -87,9 +87,14 @@ public class AutoTPS {
                                 task.getStart().getMinutes(),
                                 calculateEndTime(task)));
                             break; 
-                        } else {
-                            // Candidate is not available; find the overlapping task. //!!! need changes for traversing all overlapping ones
-                            Task overlappingTask = getOverlappingTask(candidate, task);
+                        }
+                    }
+                    if (taskAssigned) {
+                        break;
+                    }
+                    else { // we cannot assign the task due to conflicts, printing out all the conflicting tasks
+                    	for (Worker candidate : candidates) {
+                    		Task overlappingTask = getOverlappingTask(candidate, task);
                             System.out.println(String.format(
                                 "Task assignment to %s for task %s not possible from %02d:%02d to %s due to %s.",
                                 candidate.getSeniority(),
@@ -98,10 +103,7 @@ public class AutoTPS {
                                 task.getStart().getMinutes(),
                                 calculateEndTime(overlappingTask),
                                 overlappingTask.getName()));
-                        }
-                    }
-                    if (taskAssigned) {
-                        break;
+                    	}
                     }
                 }
             }
@@ -337,7 +339,7 @@ public class AutoTPS {
 
     public static void main(String[] args) {
         // Load the TPS model 
-        Model model = loadModel("src/data/tasks2.mydsl");
+        Model model = loadModel("src/data/tasks.mydsl");
 
         // Create and run the AutoTPS tool
         AutoTPS autoTPS = new AutoTPS(model);

@@ -4,6 +4,13 @@ worker E001 {
     active = True;
 }
 
+
+worker E004 {
+    name = "Peter";
+    seniority = trainee;
+    active = True;
+}
+
 worker E002 {
     name = "Bob";
     seniority = junior;
@@ -26,6 +33,12 @@ task T2 {
     difficulty = easy;
     duration = 120;
     start = 10:00;
+}
+
+task T5 {
+    difficulty = easy;
+    duration = 120;
+    start = 10:30;
 }
 
 task T3 {
