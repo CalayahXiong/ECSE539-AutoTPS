@@ -3,7 +3,11 @@
  */
 package org.xtext.example.mydsl.myDsl.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -16,10 +20,17 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
+import org.xtext.example.mydsl.myDsl.AndCondition;
+import org.xtext.example.mydsl.myDsl.Comparison;
+import org.xtext.example.mydsl.myDsl.Condition;
+import org.xtext.example.mydsl.myDsl.DifficultyCondition;
 import org.xtext.example.mydsl.myDsl.Model;
 import org.xtext.example.mydsl.myDsl.MyDslPackage;
+import org.xtext.example.mydsl.myDsl.OrCondition;
+import org.xtext.example.mydsl.myDsl.PrimaryCondition;
 import org.xtext.example.mydsl.myDsl.Rule;
+import org.xtext.example.mydsl.myDsl.SeniorityLevel;
+import org.xtext.example.mydsl.myDsl.ShiftCondition;
 import org.xtext.example.mydsl.myDsl.Task;
 import org.xtext.example.mydsl.myDsl.Worker;
 
@@ -244,6 +255,193 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return rules != null && !rules.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+  
+  private Map< Worker, List<Task> > assignments = new HashMap<>();
+  
+  public void evaluate() {
+      List<Task> tasks = this.getTasks();
+      List<Worker> workers = this.getWorkers();
+      List<Rule> rules = this.getRules();
+
+      assignments.clear(); //initialize
+      
+      // For each task, try to assign it
+      for (Task task : tasks) {
+          boolean taskAssigned = false;
+          boolean ruleMatched = false;
+          
+          // Process each rule
+          for (Rule rule : rules) {
+              if (ruleMatchesTask(rule, task)) {
+                  ruleMatched = true;
+                  // Find all candidate workers: active and with required seniority.
+                  List<Worker> candidates = new ArrayList<>();
+                  for (Worker worker : workers) {
+                      if (worker.getSeniority().equals(rule.getAssign())
+                              && worker.getIsActive().toString().equals("True")) {
+                          candidates.add(worker);
+                      }
+                  }
+                  
+                  // no active worker with required seniority exists
+                  if (candidates.isEmpty()) {
+                      System.out.println(String.format("Task assignment for task %s not possible (all conditions false / no active worker with required seniority exists).", task.getName()));
+                      taskAssigned = true;  // consider the task as "processed"
+                      break; 
+                  }
+                  
+                  // have possible employees, the check candidates for availability
+                  for (Worker candidate : candidates) {
+                      if (isWorkerAvailable(candidate, task)) {
+                          // Candidate is available; assign the task.
+                          taskAssigned = true;
+                          if (assignments.containsKey(candidate)) {
+                              assignments.get(candidate).add(task);
+                          } else {
+                              List<Task> candidateTasks = new ArrayList<>();
+                              candidateTasks.add(task);
+                              assignments.put(candidate, candidateTasks);
+                          }
+                          System.out.println(String.format(
+                              "Task assignment to %s %s for task %s from %02d:%02d to %s.",
+                              candidate.getSeniority(),
+                              candidate.getName(),  
+                              task.getName(),
+                              task.getStart().getHours(),
+                              task.getStart().getMinutes(),
+                              calculateEndTime(task)));
+                          break; 
+                      }
+                  }
+                  if (taskAssigned) {
+                      break;
+                  }
+                  else { // we cannot assign the task due to conflicts, printing out all the conflicting tasks
+                  	for (Worker candidate : candidates) {
+                  		Task overlappingTask = getOverlappingTask(candidate, task);
+                          System.out.println(String.format(
+                              "Task assignment to %s for task %s not possible from %02d:%02d to %s due to %s.",
+                              candidate.getSeniority(),
+                              task.getName(),
+                              task.getStart().getHours(),
+                              task.getStart().getMinutes(),
+                              calculateEndTime(overlappingTask),
+                              overlappingTask.getName()));
+                  	}
+                  }
+              }
+          }
+          // If no rule matched the task or if no candidate worker was found/available,
+          if (!taskAssigned && !ruleMatched) {
+              System.out.println(String.format("Task assignment for task %s not possible (all conditions false / no active worker with required seniority exists).", task.getName()));
+          }
+      }
+  }
+
+  private boolean ruleMatchesTask(Rule rule, Task task) {
+      // Get the condition from the rule
+      Condition condition = rule.getCondition();
+
+      // Evaluate the condition recursively
+      return evaluateCondition(condition, task);
+  }
+
+  private boolean evaluateCondition(Condition condition, Task task) {
+      if (condition instanceof OrCondition) {
+          // Handle OR conditions
+          OrCondition orCondition = (OrCondition) condition;
+          return evaluateCondition(orCondition.getLeft(), task) || 
+                 evaluateCondition(orCondition.getRight(), task);
+      } else if (condition instanceof AndCondition) {
+          // Handle AND conditions
+          AndCondition andCondition = (AndCondition) condition;
+          return evaluateCondition(andCondition.getLeft(), task) && 
+                 evaluateCondition(andCondition.getRight(), task);
+      } else if (condition instanceof Comparison) {
+          // Handle comparison conditions
+          return ((Comparison)condition).evaluate(task.getDuration());
+      } else if (condition instanceof ShiftCondition) {
+          // Handle shift conditions 
+          return ((ShiftCondition)condition).evaluate(getTaskShift(task.getStart().getHours(), task.getStart().getMinutes()));
+      } else if (condition instanceof DifficultyCondition) {
+          // Handle difficulty conditions
+          return ((DifficultyCondition)condition).evaluate(task.getDifficulty().toString().toLowerCase());
+      } else if (condition instanceof PrimaryCondition) {
+          // Handle other conditions
+      	PrimaryCondition primary = (PrimaryCondition) condition;
+          return evaluateCondition( primary.getInner(), task);  //?? Primary Condition
+      } else {
+      	throw new IllegalArgumentException("Unknown condition type: " + condition.getClass().getSimpleName());
+      }
+  }
+
+  private String getTaskShift(int h, int m) {
+      // Parse the start time (HH:MM) and determine the shift
+      //String[] parts = startTime.split(":");
+      
+      //System.out.print(parts);
+      
+      int hours = h;
+
+      if (hours >= 6 && hours < 14) {
+          return "dayshift";
+      } else if (hours >= 14 && hours < 22) {
+          return "eveningshift";
+      } else {
+          return "nightshift";
+      }
+  }
+  
+  private boolean isWorkerAvailable(Worker worker, Task task) {
+		//
+  	List<Task> assignedTasks = assignments.getOrDefault(worker, new ArrayList<>());
+  	for (Task assignedTask : assignedTasks) {
+  		if (isOverlapping(assignedTask, task)) {
+  			return false;
+  		}
+  	}
+		return true;
+	}
+
+	private boolean isOverlapping(Task t1, Task t2) {
+		String t1Start = t1.getStart().getHours() + ":" + t1.getStart().getMinutes();
+		String t2Start = t2.getStart().getHours() + ":" + t2.getStart().getMinutes();
+		String t1End = calculateEndTime(t1);
+		String t2End = calculateEndTime(t2);
+		
+		return t1End.compareTo(t2Start) > 0 || t2End.compareTo(t1Start)> 0;		
+	}
+	
+	private Task getOverlappingTask(Worker worker, Task t) {
+		List<Task> assignedTasks = assignments.getOrDefault(worker, new ArrayList<>());
+		for (Task assignedTask : assignedTasks) {
+			if (isOverlapping(assignedTask, t)) {
+				return assignedTask;
+			}
+		}
+		return null;
+
+	}
+
+	private String calculateEndTime(Task task) {
+      // Calculate the end time of the task based on its start time and duration
+      //String[] parts = task.getStart().toString().split(":");
+      int hours = task.getStart().getHours();
+      int minutes = task.getStart().getMinutes();
+
+      int durationHours = task.getDuration() / 60;
+      int durationMinutes = task.getDuration() % 60;
+
+      hours += durationHours;
+      minutes += durationMinutes;
+
+      while (minutes >= 60) {
+          hours += 1;
+          minutes -= 60;
+      }
+
+      return String.format("%02d:%02d", hours, minutes);
   }
 
 } //ModelImpl

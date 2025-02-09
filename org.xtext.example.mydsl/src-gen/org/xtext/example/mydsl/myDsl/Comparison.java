@@ -66,5 +66,7 @@ public interface Comparison extends Condition
    * @generated
    */
   void setDuration(int value);
+  
+  boolean evaluate(int taskDuration);
 
 } // Comparison

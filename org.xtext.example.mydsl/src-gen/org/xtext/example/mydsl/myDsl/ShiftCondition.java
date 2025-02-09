@@ -46,5 +46,7 @@ public interface ShiftCondition extends Condition
    * @generated
    */
   void setShift(Shift value);
+  
+  boolean evaluate(String shift);
 
 } // ShiftCondition

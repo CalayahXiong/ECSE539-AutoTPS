@@ -176,5 +176,9 @@ public class DifficultyConditionImpl extends ConditionImpl implements Difficulty
     result.append(')');
     return result.toString();
   }
+  
+  public boolean evaluate(String difficulty) {
+	  return this.getDifficulty().toString().equals(difficulty);
+  }
 
 } //DifficultyConditionImpl

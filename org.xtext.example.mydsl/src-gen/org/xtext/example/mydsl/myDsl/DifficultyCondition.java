@@ -47,4 +47,5 @@ public interface DifficultyCondition extends Condition
    */
   void setDifficulty(Difficulty value);
 
+  boolean evaluate(String difficulty);
 } // DifficultyCondition

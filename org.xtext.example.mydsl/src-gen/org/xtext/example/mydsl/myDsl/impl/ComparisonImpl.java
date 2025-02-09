@@ -233,5 +233,25 @@ public class ComparisonImpl extends ConditionImpl implements Comparison
     result.append(')');
     return result.toString();
   }
+  
+  public boolean evaluate(int taskDuration) {
+	  int duration = this.getDuration();
+      String operator = this.getOperator();
+      
+      switch (operator) {
+          case ">":
+              return taskDuration > duration;
+          case "<":
+              return taskDuration < duration;
+          case ">=":
+              return taskDuration >= duration;
+          case "<=":
+              return taskDuration <= duration;
+          case "=":
+              return taskDuration == duration;
+          default:
+              throw new IllegalArgumentException("Invalid operator: " + operator);
+      }
+  }
 
 } //ComparisonImpl

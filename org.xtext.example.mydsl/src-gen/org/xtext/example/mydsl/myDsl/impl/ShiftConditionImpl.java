@@ -176,5 +176,9 @@ public class ShiftConditionImpl extends ConditionImpl implements ShiftCondition
     result.append(')');
     return result.toString();
   }
+  
+  public boolean evaluate(String shift) {
+	  return this.getShift().toString().equals(shift);
+  }
 
 } //ShiftConditionImpl
